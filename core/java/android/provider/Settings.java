@@ -3295,6 +3295,12 @@ public final class Settings {
         public static final Validator LOCKSCREEN_DISABLED_VALIDATOR = sBooleanValidator;
 
         /**
+         * Force expanded notifications on all apps that support it.
+         * @hide
+         */
+        public static final String FORCE_EXPANDED_NOTIFICATIONS = "force_expanded_notifications";
+
+        /**
          * @deprecated Use {@link android.provider.Settings.Global#LOW_BATTERY_SOUND}
          * instead
          * @hide
