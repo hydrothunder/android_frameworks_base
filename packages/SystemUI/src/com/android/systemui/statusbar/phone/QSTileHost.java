@@ -51,6 +51,7 @@ import com.android.systemui.qs.tiles.CustomQSTile;
 import com.android.systemui.qs.tiles.DndTile;
 import com.android.systemui.qs.tiles.EditTile;
 import com.android.systemui.qs.tiles.FlashlightTile;
+import com.android.systemui.qs.tiles.FloatingWindowsTile;
 import com.android.systemui.qs.tiles.HeadsUpTile;
 import com.android.systemui.qs.tiles.HotspotTile;
 import com.android.systemui.qs.tiles.IntentTile;
@@ -388,6 +389,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
 	else if (tileSpec.equals("gesture_anywhere")) return new GestureAnyWhereTile(this);
 	else if (tileSpec.equals("power_menu")) return new PowerMenuTile(this);        
 	else if (tileSpec.equals("sound")) return new SoundTile(this);	
+	else if (tileSpec.equals("float_mode")) return new FloatingWindowsTile(this);
 	else if (tileSpec.equals("caffeine")) return new CaffeineTile(this);
         else if (tileSpec.startsWith(IntentTile.PREFIX)) return IntentTile.create(this,tileSpec);
         else if (TextUtils.split(tileSpec, "\\|").length == 3) {
@@ -491,6 +493,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
 	else if (spec.equals("sound")) return R.string.quick_settings_sound_label;
 	else if (spec.equals("power_menu")) return R.string.quick_settings_power_menu_label;        
 	else if (spec.equals("gesture_anywhere")) return R.string.quick_settings_gesture_anywhere_label;
+	else if (spec.equals("float_mode")) return R.string.recent_float_mode_title;
 	else if (spec.equals("kill_app")) return R.string.qs_kill_app;
 	return 0;
     }
@@ -528,6 +531,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
 	else if (spec.equals("sound")) return R.drawable.ic_qs_ringer_audible;
 	else if (spec.equals("kill_app")) return R.drawable.ic_app_kill;
 	else if (spec.equals("gesture_anywhere")) return R.drawable.ic_qs_gestures_on;
+	else if (spec.equals("float_mode")) return R.drawable.ic_qs_floating_on;
 	return 0;
     }
 
