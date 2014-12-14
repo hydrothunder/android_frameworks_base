@@ -25,7 +25,8 @@
 
     <!-- Gesture Anywhere specific colors -->
     <color name="gesture_overlay_background_fill_color">#80000000</color>
-    <color name="gesture_color">@android:color/holo_blue_light</color>
+<<<<<<< HEAD
+    <color name="gesture_color">#FF07998B</color>
 
     <!-- app sidebar trigger region color -->
     <color name="trigger_region_color">#8015a0e5</color>
@@ -49,5 +50,8 @@
     <color name="battery_juice_critical">#ff4444</color>
     <color name="battery_background">#ffffff</color>
     <color name="status">#ffffff</color>
+=======
+    <color name="gesture_color">@android:color/holo_blue_light</color>
+>>>>>>> bdad8f0... Gesture Anywhere [1/2]
 
 </resources>
