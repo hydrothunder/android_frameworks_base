@@ -18,6 +18,7 @@ package com.android.systemui.qs;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
 import android.app.ActivityManager;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -34,6 +35,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.UserHandle;
+import android.provider.Settings;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.ArrayMap;
@@ -115,6 +117,7 @@ public class QSDragPanel extends QSPanel implements View.OnDragListener, View.On
     private int mLocationHits;
     private int mLastLeftShift = -1;
     private int mLastRightShift = -1;
+    private int mNumberOfColumns;
     private boolean mRestored;
     private boolean mRestoring;
     // whether the current view we are dragging in has shifted tiles
@@ -535,6 +538,22 @@ public class QSDragPanel extends QSPanel implements View.OnDragListener, View.On
 
     public boolean isEditing() {
         return mEditing;
+    }
+
+    /**
+     * Use three or four columns.
+     */
+    private int useFourColumns() {
+        final Resources res = mContext.getResources();
+        boolean shouldUseFourColumns = Settings.System.getInt(
+            mContext.getContentResolver(), Settings.System.QS_USE_FOUR_COLUMNS,
+                0) == 1;
+        if (shouldUseFourColumns) {
+            mNumberOfColumns = 4;
+        } else {
+            mNumberOfColumns = res.getInteger(R.integer.quick_settings_num_columns);
+        }
+        return mNumberOfColumns;
     }
 
     protected int getPagesForCount(int tileCount) {
@@ -1893,7 +1912,7 @@ public class QSDragPanel extends QSPanel implements View.OnDragListener, View.On
 
     public void updateResources() {
         final Resources res = mContext.getResources();
-        final int columns = Math.max(1, res.getInteger(R.integer.quick_settings_num_columns));
+        final int columns = Math.max(1, useFourColumns());
         mCellHeight = res.getDimensionPixelSize(R.dimen.qs_tile_height);
         mCellWidth = (int) (mCellHeight * TILE_ASPECT);
         mLargeCellHeight = res.getDimensionPixelSize(R.dimen.qs_dual_tile_height);
