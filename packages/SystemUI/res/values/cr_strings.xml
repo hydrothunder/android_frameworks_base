@@ -73,6 +73,9 @@
          all of the currently visible notifications. [CHAR LIMIT=10]-->
     <string name="clear_recents">Close all recent</string>
 
+    <!-- Restart UI -->
+    <string name="quick_settings_systemui_restart_label">Restart SystemUI</string>
+    
     <!-- Music QS Tile -->
     <string name="quick_settings_music_label">Music</string>
     <string name="quick_settings_music_play">Play</string>
