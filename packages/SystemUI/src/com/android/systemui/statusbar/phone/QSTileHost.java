@@ -61,6 +61,7 @@ import com.android.systemui.qs.tiles.MusicTile;
 import com.android.systemui.qs.tiles.NfcTile;
 import com.android.systemui.qs.tiles.PerfProfileTile;
 import com.android.systemui.qs.tiles.ProfilesTile;
+import com.android.systemui.qs.tiles.RebootTile;
 import com.android.systemui.qs.tiles.RotationLockTile;
 import com.android.systemui.qs.tiles.ScreenTimeoutTile;
 import com.android.systemui.qs.tiles.SyncTile;
@@ -369,7 +370,8 @@ public class QSTileHost implements QSTile.Host, Tunable {
         else if (tileSpec.equals("screen_timeout")) return new ScreenTimeoutTile(this);
         else if (tileSpec.equals("performance")) return new PerfProfileTile(this);
         else if (tileSpec.equals("pie")) return new PieTile(this);
-        else if (tileSpec.equals("lockscreen")) return  new LockscreenToggleTile(this);
+        else if (tileSpec.equals("reboot")) return new RebootTile(this);
+	else if (tileSpec.equals("lockscreen")) return  new LockscreenToggleTile(this);
         else if (tileSpec.equals("ambient_display")) return new AmbientDisplayTile(this);
 	else if (tileSpec.equals("music")) return new MusicTile(this);        
 	else if (tileSpec.equals("heads_up")) return new HeadsUpTile(this);
