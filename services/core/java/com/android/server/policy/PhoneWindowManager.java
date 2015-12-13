@@ -1043,16 +1043,16 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private boolean mEdgeListenerActivated = false;
     private boolean mUsingEdgeGestureServiceForGestures = false;
 
-     private void updateEdgeGestureListenerState() {
-         int flags = 0;
-         if (mUsingEdgeGestureServiceForGestures) {
-             flags = EdgeServiceConstants.LONG_LIVING | EdgeServiceConstants.UNRESTRICTED;
-              if (mStatusBar != null && !mStatusBar.isVisibleLw()) {
-                  flags |= EdgeGesturePosition.TOP.FLAG;
-              }
-			 if (mNavigationBar != null && !mNavigationBar.isVisibleLw() && !isStatusBarKeyguard() && !immersiveModeImplementsPie()) {
-                  if (mNavigationBarOnBottom) {
-                      flags |= EdgeGesturePosition.BOTTOM.FLAG;
+    private void updateEdgeGestureListenerState() {
+        int flags = 0;
+        if (mUsingEdgeGestureServiceForGestures) {
+            flags = EdgeServiceConstants.LONG_LIVING | EdgeServiceConstants.UNRESTRICTED;
+            if (mStatusBar != null && !mStatusBar.isVisibleLw()) {
+                flags |= EdgeGesturePosition.TOP.FLAG;
+            }
+            if (mNavigationBar != null && !mNavigationBar.isVisibleLw() && !isStatusBarKeyguard() && !immersiveModeImplementsPie()) {
+                if (mNavigationBarOnBottom) {
+                    flags |= EdgeGesturePosition.BOTTOM.FLAG;
                 } else if (mNavigationBarLeftInLandscape) {
                     flags |= EdgeGesturePosition.LEFT.FLAG;
                 } else {

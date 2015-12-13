@@ -42,11 +42,13 @@ import android.content.pm.UserInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.ThemeConfig;
+import android.content.ServiceConnection;
 import android.database.ContentObserver;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.Icon;
 import android.media.session.MediaController;
+import android.hardware.SensorManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -85,6 +87,7 @@ import android.view.WindowManager;
 import android.view.WindowManagerGlobal;
 import android.view.accessibility.AccessibilityManager;
 import android.view.animation.AnimationUtils;
+import android.view.OrientationEventListener;
 import android.widget.DateTimeView;
 import android.widget.ImageView;
 import android.widget.RemoteViews;
@@ -147,9 +150,9 @@ public abstract class BaseStatusBar extends SystemUI implements
     protected static final int MSG_CANCEL_PRELOAD_RECENT_APPS = 1023;
     protected static final int MSG_SHOW_NEXT_AFFILIATED_TASK = 1024;
     protected static final int MSG_SHOW_PREV_AFFILIATED_TASK = 1025;
-    protected static final int MSG_TOGGLE_LAST_APP = 1027;
-    protected static final int MSG_TOGGLE_KILL_APP = 1028;
-    protected static final int MSG_TOGGLE_SCREENSHOT = 1029;
+    protected static final int MSG_TOGGLE_LAST_APP = 1026;
+    protected static final int MSG_TOGGLE_KILL_APP = 1027;
+    protected static final int MSG_TOGGLE_SCREENSHOT = 1028;
 
     protected static final boolean ENABLE_HEADS_UP = true;
     // scores above this threshold should be displayed in heads up mode.
