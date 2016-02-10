@@ -59,6 +59,7 @@ import com.android.systemui.qs.tiles.SystemUIRestartTile;
 import com.android.systemui.qs.tiles.PieTile;
 import com.android.systemui.qs.tiles.LockscreenToggleTile;
 import com.android.systemui.qs.tiles.MusicTile;
+import com.android.systemui.qs.tiles.KillAppTile;
 import com.android.systemui.qs.tiles.NfcTile;
 import com.android.systemui.qs.tiles.PerfProfileTile;
 import com.android.systemui.qs.tiles.ProfilesTile;
@@ -380,6 +381,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
 	else if (tileSpec.equals("restartui")) return new SystemUIRestartTile(this);
 	else if (tileSpec.equals("heads_up")) return new HeadsUpTile(this);
         else if (tileSpec.equals("battery_saver")) return new BatterySaverTile(this);
+	else if (tileSpec.equals("kill_app")) return new KillAppTile(this);
 	else if (tileSpec.equals("power_menu")) return new PowerMenuTile(this);        
 	else if (tileSpec.equals("sound")) return new SoundTile(this);	
 	else if (tileSpec.equals("caffeine")) return new CaffeineTile(this);
@@ -484,6 +486,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
 	else if (spec.equals("pie")) return R.string.quick_settings_pie;
 	else if (spec.equals("sound")) return R.string.quick_settings_sound_label;
 	else if (spec.equals("power_menu")) return R.string.quick_settings_power_menu_label;        
+	else if (spec.equals("kill_app")) return R.string.qs_kill_app;
 	return 0;
     }
 
@@ -518,6 +521,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
 	else if (spec.equals("pie")) return R.drawable.ic_qs_pie_on;
         else if (spec.equals("power_menu")) return R.drawable.ic_qs_power_menu;
 	else if (spec.equals("sound")) return R.drawable.ic_qs_ringer_audible;
+	else if (spec.equals("kill_app")) return R.drawable.ic_app_kill;
 	return 0;
     }
 
