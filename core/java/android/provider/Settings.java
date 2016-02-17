@@ -3932,6 +3932,12 @@ public final class Settings {
         public static final String DASHBOARD_SWITCHES = "dashboard_switches";
 
 	/**
+         * Whether to display dashboard dividers
+         * @hide
+         */
+        public static final String DASHBOARD_TILEVIEW_DIVIDERS = "dashboard_tileview_dividers";
+
+	/**
          * Whether to show four tiles per row.
          * @hide
          */
