@@ -66,6 +66,7 @@ import com.android.systemui.qs.tiles.RebootTile;
 import com.android.systemui.qs.tiles.RotationLockTile;
 import com.android.systemui.qs.tiles.PowerMenuTile;
 import com.android.systemui.qs.tiles.ScreenTimeoutTile;
+import com.android.systemui.qs.tiles.SoundTile;
 import com.android.systemui.qs.tiles.SyncTile;
 import com.android.systemui.qs.tiles.UsbTetherTile;
 import com.android.systemui.qs.tiles.VolumeTile;
@@ -380,6 +381,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
 	else if (tileSpec.equals("heads_up")) return new HeadsUpTile(this);
         else if (tileSpec.equals("battery_saver")) return new BatterySaverTile(this);
 	else if (tileSpec.equals("power_menu")) return new PowerMenuTile(this);        
+	else if (tileSpec.equals("sound")) return new SoundTile(this);	
 	else if (tileSpec.equals("caffeine")) return new CaffeineTile(this);
         else if (tileSpec.startsWith(IntentTile.PREFIX)) return IntentTile.create(this,tileSpec);
         else if (TextUtils.split(tileSpec, "\\|").length == 3) {
@@ -480,6 +482,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
         else if (spec.equals("caffeine")) return R.string.quick_settings_caffeine_label;
 	else if (spec.equals("restartui")) return R.string.quick_settings_systemui_restart_label;
 	else if (spec.equals("pie")) return R.string.quick_settings_pie;
+	else if (spec.equals("sound")) return R.string.quick_settings_sound_label;
 	else if (spec.equals("power_menu")) return R.string.quick_settings_power_menu_label;        
 	return 0;
     }
@@ -514,6 +517,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
 	else if (spec.equals("restartui")) return R.drawable.ic_qs_systemui_restart;	
 	else if (spec.equals("pie")) return R.drawable.ic_qs_pie_on;
         else if (spec.equals("power_menu")) return R.drawable.ic_qs_power_menu;
+	else if (spec.equals("sound")) return R.drawable.ic_qs_ringer_audible;
 	return 0;
     }
 
