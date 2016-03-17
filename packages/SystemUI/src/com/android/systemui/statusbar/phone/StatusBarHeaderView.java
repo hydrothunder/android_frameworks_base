@@ -114,6 +114,11 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
     private TextView mWeatherLine1, mWeatherLine2;
     private TextView mEditTileDoneText;
 
+    protected int mDrawable;
+    private View mHeadsUpButton;
+    private boolean mShowHeadsUpButton;
+    private boolean mHeadsUpEnabled;
+
     private boolean mShowEmergencyCallsOnly;
     private boolean mAlarmShowing;
     private AlarmManager.AlarmClockInfo mNextAlarm;
@@ -187,6 +192,9 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         mSettingsButton = (SettingsButton) findViewById(R.id.settings_button);
         mSettingsContainer = findViewById(R.id.settings_button_container);
         mSettingsButton.setOnClickListener(this);
+        mHeadsUpButton = findViewById(R.id.heads_up_button);
+        mHeadsUpButton.setOnClickListener(this);
+        mHeadsUpButton.setOnLongClickListener(this);
         mQsDetailHeader = findViewById(R.id.qs_detail_header);
         mQsDetailHeader.setAlpha(0);
         mQsDetailHeaderTitle = (TextView) mQsDetailHeader.findViewById(android.R.id.title);
@@ -430,6 +438,9 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         mAlarmStatus.setVisibility(mExpanded && mAlarmShowing ? View.VISIBLE : View.INVISIBLE);
         mSettingsContainer.setVisibility(mExpanded ? View.VISIBLE : View.INVISIBLE);
         mWeatherContainer.setVisibility(mExpanded && mShowWeather ? View.VISIBLE : View.GONE);
+        if (mHeadsUpButton != null) {
+            mHeadsUpButton.setVisibility(mExpanded && mShowHeadsUpButton ? View.VISIBLE : View.GONE);
+        }
         mQsDetailHeader.setVisibility(mExpanded && mShowingDetail ? View.VISIBLE : View.INVISIBLE);
         if (mSignalCluster != null) {
             updateSignalClusterDetachment();
@@ -460,15 +471,17 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         mSystemIcons.addView(mSignalCluster, 1);
     }
 
-    private void updateSystemIconsLayoutParams() {
+  private void updateSystemIconsLayoutParams() {
         RelativeLayout.LayoutParams lp = (LayoutParams) mSystemIconsSuperContainer.getLayoutParams();
-        int rule = mExpanded
-                ? mSettingsContainer.getId()
+        int headsUp = mHeadsUpButton != null
+                ? mHeadsUpButton.getId() : mSettingsButton.getId();
+        int ruleHeadsUpButton = mExpanded
+                ? headsUp
                 : mMultiUserSwitch.getId();
-        if (rule != lp.getRules()[RelativeLayout.START_OF]) {
-            lp.addRule(RelativeLayout.START_OF, rule);
-            mSystemIconsSuperContainer.setLayoutParams(lp);
+        if (ruleHeadsUpButton != lp.getRules()[RelativeLayout.START_OF]
+            lp.addRule(RelativeLayout.START_OF, ruleHeadsUpButton);
         }
+        mSystemIconsSuperContainer.setLayoutParams(lp);
     }
 
     private void updateListeners() {
@@ -636,6 +649,8 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
             startDateActivity();
         } else if (v == mWeatherContainer) {
             startForecastActivity();
+        } else if (v == mHeadsUpButton) {
+            startHeadsUpActivity();
         }
     }
 
@@ -667,6 +682,25 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setComponent(WeatherControllerImpl.COMPONENT_WEATHER_FORECAST);
         mActivityStarter.startActivity(intent, true /* dismissShade */);
+    }
+
+    private void startHeadsUpActivity() {
+        Settings.Global.putInt(mContext.getContentResolver(),
+        Settings.Global.HEADS_UP_NOTIFICATIONS_ENABLED,
+        mHeadsUpEnabled ? 0 : 1);
+        mActivityStarter.startAction(true /* dismissShade */);
+
+        /* show a toast */
+        String enabled = mContext.getString(R.string.heads_up_enabled);
+        String disabled = mContext.getString(R.string.heads_up_disabled);
+        int duration = Toast.LENGTH_SHORT;
+        if (mHeadsUpEnabled) {
+            Toast toast = Toast.makeText(mContext, disabled, duration);
+            toast.show();
+        } else {
+            Toast toast = Toast.makeText(mContext, enabled, duration);
+            toast.show();
+        }
     }
 
     public void setQSPanel(QSDragPanel qsp) {
@@ -722,9 +756,22 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         target.batteryY = mSystemIconsSuperContainer.getTop() + mSystemIconsContainer.getTop();
         target.batteryLevelAlpha = getAlphaForVisibility(mBatteryLevel);
         target.settingsAlpha = getAlphaForVisibility(mSettingsContainer);
-        target.settingsTranslation = mExpanded
+	target.headsUpAlpha = getAlphaForVisibility(mHeadsUpButton);        
+	target.settingsTranslation = mExpanded
                 ? 0
                 : mMultiUserSwitch.getLeft() - mSettingsContainer.getLeft();
+        target.taskManagerTranslation = mExpanded
+                ? 0
+                    :  mSettingsButton.getLeft() - mTaskManagerButton.getLeft();
+        if (mHeadsUpButton != null && mTaskManagerButton != null) {
+            target.headsUpTranslation = mExpanded
+                    ? 0
+                    :  mTaskManagerButton.getLeft() - mHeadsUpButton.getLeft();
+        } else if (mHeadsUpButton != null && mTaskManagerButton == null) {
+            target.headsUpTranslation = mExpanded
+                    ? 0
+                    :  mSettingsButton.getLeft() - mHeadsUpButton.getLeft();
+        }
         target.signalClusterAlpha = mSignalClusterDetached ? 0f : 1f;
         target.settingsRotation = !mExpanded ? 90f : 0f;
     }
@@ -782,6 +829,13 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
             mSettingsContainer.setTranslationX(values.settingsTranslation);
             mSettingsButton.setRotation(values.settingsRotation);
         }
+
+	if (mHeadsUpButton != null) {
+            mHeadsUpButton.setTranslationY(mSystemIconsSuperContainer.getTranslationY());
+            mHeadsUpButton.setTranslationX(values.headsUpTranslation);
+            mHeadsUpButton.setRotation(values.settingsRotation);
+        }
+
         applyAlpha(mEmergencyCallsOnly, values.emergencyCallsOnlyAlpha);
         if (!mShowingDetail && !mDetailTransitioning) {
             // Otherwise it needs to stay invisible
@@ -793,7 +847,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         if (mDockBatteryLevel != null) {
             applyAlpha(mDockBatteryLevel, values.batteryLevelAlpha);
         }
-        applyAlpha(mSettingsContainer, values.settingsAlpha);
+        applyAlpha(mHeadsUpContainer, values.headsUpAlpha);
         applyAlpha(mWeatherLine1, values.settingsAlpha);
         applyAlpha(mWeatherLine2, values.settingsAlpha);
         applyAlpha(mSignalCluster, values.signalClusterAlpha);
@@ -868,6 +922,8 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         float batteryY;
         float batteryLevelAlpha;
         float batteryLevelExpandedAlpha;
+        float headsUpAlpha;
+        float headsUpTranslation;
         float settingsAlpha;
         float settingsTranslation;
         float signalClusterAlpha;
@@ -883,6 +939,8 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
             avatarY = v1.avatarY * (1 - t) + v2.avatarY * t;
             batteryX = v1.batteryX * (1 - t) + v2.batteryX * t;
             batteryY = v1.batteryY * (1 - t) + v2.batteryY * t;
+            headsUpTranslation =
+                    v1.headsUpTranslation * (1 - t) + v2.headsUpTranslation * t;
             settingsTranslation = v1.settingsTranslation * (1 - t) + v2.settingsTranslation * t;
             weatherY = v1.weatherY * (1 - t) + v2.weatherY * t;
 
@@ -896,6 +954,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 
             float t3 = Math.max(0, t - 0.7f) / 0.3f;
             batteryLevelAlpha = v1.batteryLevelAlpha * (1 - t3) + v2.batteryLevelAlpha * t3;
+            headsUpAlpha = v1.headsUpAlpha * (1 - t3) + v2.headsUpAlpha * t3;
             settingsAlpha = v1.settingsAlpha * (1 - t3) + v2.settingsAlpha * t3;
             dateExpandedAlpha = v1.dateExpandedAlpha * (1 - t3) + v2.dateExpandedAlpha * t3;
             dateCollapsedAlpha = v1.dateCollapsedAlpha * (1 - t3) + v2.dateCollapsedAlpha * t3;
@@ -1043,7 +1102,9 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
                     CMSettings.System.STATUS_BAR_BATTERY_STYLE), false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(CMSettings.System.getUriFor(
                     CMSettings.System.STATUS_BAR_SHOW_BATTERY_PERCENT), false, this, UserHandle.USER_ALL);
-            update();
+	    resolver.registerContentObserver(Settings.Global.getUriFor(
+                    Settings.Global.HEADS_UP_NOTIFICATIONS_ENABLED), false, this);            
+		    update();
         }
 
         @Override
@@ -1063,6 +1124,8 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
                     CMSettings.System.STATUS_BAR_BATTERY_STYLE, 0, currentUserId);
             boolean showExpandedBatteryPercentage = CMSettings.System.getIntForUser(resolver,
                     CMSettings.System.STATUS_BAR_SHOW_BATTERY_PERCENT, 0, currentUserId) == 0;
+            mHeadsUpEnabled = Settings.Global.getInt(
+                    resolver, Settings.Global.HEADS_UP_NOTIFICATIONS_ENABLED, 1) == 1;
 
             switch (batteryStyle) {
                 case 4: //BATTERY_METER_GONE
@@ -1076,8 +1139,23 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
             mShowBatteryTextExpanded = showExpandedBatteryPercentage;
             mShowWeather = CMSettings.System.getInt(
                     resolver, CMSettings.System.STATUS_BAR_SHOW_WEATHER, 1) == 1;
+            mShowHeadsUpButton = Settings.System.getInt(getContext().getContentResolver(),
+                Settings.System.HEADS_UP_SHOW_STATUS_BUTTON, 0) == 1;
+
             updateVisibilities();
+            updateHeadsUpButton();
             requestCaptureValues();
+        }
+    }
+
+    private void updateHeadsUpButton() {
+        Drawable d = getResources().getDrawable(R.drawable.ic_heads_up_status_on);
+        ImageView image = (ImageView)findViewById(R.id.heads_up_button);
+        if (mHeadsUpEnabled) {
+            image.setImageDrawable(d);
+        } else {
+            image.setImageDrawable(
+                    getResources().getDrawable(R.drawable.ic_heads_up_status_off));
         }
     }
 }

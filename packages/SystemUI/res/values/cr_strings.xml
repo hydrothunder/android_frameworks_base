@@ -65,5 +65,9 @@
 	
 	<!-- Pie tile -->
 	<string name="quick_settings_pie">Pie</string>
+	
+    <!-- Heads up toast -->
+    <string name="heads_up_enabled">Heads up notifications are enabled</string>
+    <string name="heads_up_disabled">Heads up notifications are disabled</string>
 
 </resources>
