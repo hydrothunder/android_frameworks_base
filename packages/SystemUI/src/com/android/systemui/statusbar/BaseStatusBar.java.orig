@@ -147,9 +147,13 @@ public abstract class BaseStatusBar extends SystemUI implements
     protected static final int MSG_CANCEL_PRELOAD_RECENT_APPS = 1023;
     protected static final int MSG_SHOW_NEXT_AFFILIATED_TASK = 1024;
     protected static final int MSG_SHOW_PREV_AFFILIATED_TASK = 1025;
+<<<<<<< HEAD
+=======
+    protected static final int MSG_CLEAR_RECENT_APPS = 1026;
     protected static final int MSG_TOGGLE_LAST_APP = 1027;
     protected static final int MSG_TOGGLE_KILL_APP = 1028;
     protected static final int MSG_TOGGLE_SCREENSHOT = 1029;
+>>>>>>> a81d316... {SQUASHED} Add Back Pie [1/2]
 
     protected static final boolean ENABLE_HEADS_UP = true;
     // scores above this threshold should be displayed in heads up mode.
@@ -275,6 +279,12 @@ public abstract class BaseStatusBar extends SystemUI implements
     // to some other configuration change).
     protected ThemeConfig mCurrentTheme;
 
+<<<<<<< HEAD
+=======
+    private ArrayList<String> mDndList = new ArrayList<String>();
+    private ArrayList<String> mBlacklist = new ArrayList<String>();
+    private ArrayList<String> mWhitelist = new ArrayList<String>();
+
     public int getNotificationCount() {
         return mNotificationData.getActiveNotifications().size();
     }
@@ -294,6 +304,7 @@ public abstract class BaseStatusBar extends SystemUI implements
         }
     };
 
+>>>>>>> a81d316... {SQUASHED} Add Back Pie [1/2]
     @Override  // NotificationData.Environment
     public boolean isDeviceProvisioned() {
         return mDeviceProvisioned;
@@ -718,6 +729,13 @@ public abstract class BaseStatusBar extends SystemUI implements
         mContext.registerReceiverAsUser(mAllUsersReceiver, UserHandle.ALL, allUsersFilter,
                 null, null);
         updateCurrentProfilesCache();
+<<<<<<< HEAD
+=======
+
+
+        SettingsObserver observer = new SettingsObserver(mHandler);
+        observer.observe();
+ 
 
         mPieSettingsObserver.onChange(false);
         mContext.getContentResolver().registerContentObserver(Settings.System.getUriFor(
@@ -787,6 +805,7 @@ public abstract class BaseStatusBar extends SystemUI implements
                     }
                 }
             };
+>>>>>>> a81d316... {SQUASHED} Add Back Pie [1/2]
     }
 
     protected void notifyUserAboutHiddenNotifications() {
@@ -1241,6 +1260,16 @@ public abstract class BaseStatusBar extends SystemUI implements
         mHandler.removeMessages(msg);
         mHandler.sendEmptyMessage(msg);
     }
+<<<<<<< HEAD
+=======
+    
+    
+	public void screenPinningStateChanged(boolean enabled) {
+        if (mNavigationBarView != null) {
+            mNavigationBarView.screenPinningStateChanged(enabled);
+        }
+    }
+    
 
     @Override
     public void toggleLastApp() {
@@ -1262,6 +1291,7 @@ public abstract class BaseStatusBar extends SystemUI implements
         mHandler.removeMessages(msg);
         mHandler.sendEmptyMessage(msg);
     }
+>>>>>>> a81d316... {SQUASHED} Add Back Pie [1/2]
 
     protected H createHandler() {
          return new H();
@@ -2502,7 +2532,8 @@ public abstract class BaseStatusBar extends SystemUI implements
         }
         return themedContext;
     }
-Runnable mKillTask = new Runnable() {
+
+    Runnable mKillTask = new Runnable() {
         public void run() {
             final Intent intent = new Intent(Intent.ACTION_MAIN);
             String defaultHomePackage = "com.android.launcher";

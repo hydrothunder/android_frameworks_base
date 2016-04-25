@@ -55,8 +55,24 @@ import com.android.systemui.qs.tiles.HeadsUpTile;
 import com.android.systemui.qs.tiles.HotspotTile;
 import com.android.systemui.qs.tiles.IntentTile;
 import com.android.systemui.qs.tiles.LocationTile;
-import com.android.systemui.qs.tiles.PieTile;
+<<<<<<< HEAD
 import com.android.systemui.qs.tiles.LockscreenToggleTile;
+=======
+import com.android.systemui.qs.tiles.PieTile;
+import com.android.systemui.qs.tiles.AppCircleBarTile;
+import com.android.systemui.qs.tiles.ExpandedDesktopTile;
+import com.android.systemui.qs.tiles.KernelAdiutorTile;
+import com.android.systemui.qs.tiles.HardwareKeysTile;
+import com.android.systemui.qs.tiles.PulseTile;
+import com.android.systemui.qs.tiles.GestureAnyWhereTile;
+import com.android.systemui.qs.tiles.ScreenrecordTile;
+import com.android.systemui.qs.tiles.MusicTile;
+import com.android.systemui.qs.tiles.RRTile;
+import com.android.systemui.qs.tiles.KillAppTile;
+import com.android.systemui.qs.tiles.LteTile;
+import com.android.systemui.qs.tiles.ThemesTile;
+import com.android.systemui.qs.tiles.NavigationBarTile;
+>>>>>>> a81d316... {SQUASHED} Add Back Pie [1/2]
 import com.android.systemui.qs.tiles.NfcTile;
 import com.android.systemui.qs.tiles.PerfProfileTile;
 import com.android.systemui.qs.tiles.ProfilesTile;
@@ -345,6 +361,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
         }
     }
 
+<<<<<<< HEAD
     public QSTile<?> createTile(String tileSpec) {
         if (tileSpec.equals("wifi")) return new WifiTile(this);
         else if (tileSpec.equals("bt")) return new BluetoothTile(this);
@@ -367,7 +384,6 @@ public class QSTileHost implements QSTile.Host, Tunable {
         else if (tileSpec.equals("usb_tether")) return new UsbTetherTile(this);
         else if (tileSpec.equals("screen_timeout")) return new ScreenTimeoutTile(this);
         else if (tileSpec.equals("performance")) return new PerfProfileTile(this);
-        else if (tileSpec.equals("pie")) return new PieTile(this);
         else if (tileSpec.equals("lockscreen")) return  new LockscreenToggleTile(this);
         else if (tileSpec.equals("ambient_display")) return new AmbientDisplayTile(this);
         else if (tileSpec.equals("heads_up")) return new HeadsUpTile(this);
@@ -380,6 +396,58 @@ public class QSTileHost implements QSTile.Host, Tunable {
             return new CustomQSTile(this, tileSpec);
         } else
             throw new IllegalArgumentException("Bad tile spec: " + tileSpec);
+=======
+    protected QSTile<?> createTile(String tileSpec) {
+	if (tileSpec.equals("wifi")) return new WifiTile(this);
+	else if (tileSpec.equals("bt")) return new BluetoothTile(this);
+	else if (tileSpec.equals("inversion")) return new ColorInversionTile(this);
+	else if (tileSpec.equals("cell")) return new CellularTile(this);
+	else if (tileSpec.equals("airplane")) return new AirplaneModeTile(this);
+	else if (tileSpec.equals("dnd")) return new DndTile(this);
+	else if (tileSpec.equals("rotation")) return new RotationLockTile(this);
+	else if (tileSpec.equals("flashlight")) return new FlashlightTile(this);
+	else if (tileSpec.equals("location")) return new LocationTile(this);
+	else if (tileSpec.equals("cast")) return new CastTile(this);
+	else if (tileSpec.equals("hotspot")) return new HotspotTile(this);
+	else if (tileSpec.equals("adb_network")) return new AdbOverNetworkTile(this);
+	else if (tileSpec.equals("compass")) return new CompassTile(this);
+	else if (tileSpec.equals("nfc")) return new NfcTile(this);
+	else if (tileSpec.equals("profiles")) return new ProfilesTile(this);
+	else if (tileSpec.equals("sync")) return new SyncTile(this);
+	else if (tileSpec.equals("volume_panel")) return new VolumeTile(this);
+	else if (tileSpec.equals("usb_tether")) return new UsbTetherTile(this);
+	else if (tileSpec.equals("screen_timeout")) return new ScreenTimeoutTile(this);
+	else if (tileSpec.equals("performance")) return new PerfProfileTile(this);
+	else if (tileSpec.equals("ambient_display")) return new AmbientDisplayTile(this);
+	else if (tileSpec.equals("live_display")) return new LiveDisplayTile(this);
+	else if (tileSpec.equals("brightness")) return new BrightnessTile(this);
+	else if (tileSpec.equals("screen_off")) return new ScreenOffTile(this);
+	else if (tileSpec.equals("screenshot")) return new ScreenshotTile(this);
+	else if (tileSpec.equals("expanded_desktop")) return new ExpandedDesktopTile(this);
+	else if (tileSpec.equals("music")) return new MusicTile(this);
+	else if (tileSpec.equals("reboot")) return new RebootTile(this);
+	else if (tileSpec.equals("configurations")) return new RRTile(this);
+	else if (tileSpec.equals("heads_up")) return new HeadsUpTile(this);
+	else if (tileSpec.equals("lte")) return new LteTile(this);
+	else if (tileSpec.equals("themes")) return new ThemesTile(this);
+	else if (tileSpec.equals("navbar")) return new NavigationBarTile(this);
+	else if (tileSpec.equals("appcirclebar")) return new AppCircleBarTile(this);
+	else if (tileSpec.equals("kernel_adiutor")) return new KernelAdiutorTile(this);
+	else if (tileSpec.equals("screenrecord")) return new ScreenrecordTile(this);
+	else if (tileSpec.equals("gesture_anywhere")) return new GestureAnyWhereTile(this);
+	else if (tileSpec.equals("battery_saver")) return new BatterySaverTile(this);
+	else if (tileSpec.equals("power_menu")) return new PowerMenuTile(this);
+	else if (tileSpec.equals("app_picker")) return new AppPickerTile(this);
+	else if (tileSpec.equals("kill_app")) return new KillAppTile(this);
+	else if (tileSpec.equals("caffeine")) return new CaffeineTile(this);
+	else if (tileSpec.equals("hw_keys")) return new HardwareKeysTile(this);	
+	else if (tileSpec.equals("sound")) return new SoundTile(this);
+	else if (tileSpec.equals("lockscreen")) return new LockscreenToggleTile(this);
+	else if (tileSpec.equals("pulse")) return new PulseTile(this);
+	else if (tileSpec.equals("pie")) return new PieTile(this);
+	else if (tileSpec.startsWith(IntentTile.PREFIX)) return IntentTile.create(this,tileSpec);
+	else throw new IllegalArgumentException("Bad tile spec: " + tileSpec);
+>>>>>>> a81d316... {SQUASHED} Add Back Pie [1/2]
     }
 
     protected List<String> loadTileSpecs(String tileList) {
