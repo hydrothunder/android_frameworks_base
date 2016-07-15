@@ -3520,30 +3520,6 @@ public final class Settings {
          * @hide
          */
         public static final String NETWORK_TRAFFIC_HIDEARROW = "network_traffic_hidearrow";
-		
-		/**
-         * Setting for clock color
-         * @hide
-         */
-        public static final String STATUSBAR_CLOCK_COLOR = "statusbar_clock_color";
-
-        /**
-         * Master switch for clock color
-         * @hide
-         */
-        public static final String STATUSBAR_CLOCK_COLOR_SWITCH = "statusbar_clock_color_switch";
-
-        /**
-         * Settings for clock font style
-         * @hide
-         */
-        public static final String STATUSBAR_CLOCK_FONT_STYLE = "statusbar_clock_font_style";
-
-        /**
-         * Settings for clock font size
-         * @hide
-         */
-        public static final String STATUSBAR_CLOCK_FONT_SIZE = "statusbar_clock_font_size";
 
         /**
          * Whether lock-to-app will be triggered by long-press on recents.
@@ -3562,29 +3538,6 @@ public final class Settings {
          * @hide
          */
         public static final String EGG_MODE = "egg_mode";
-/**
-         * Setting for clock color
-         * @hide
-         */
-        public static final String STATUSBAR_CLOCK_COLOR = "statusbar_clock_color";
-
-        /**
-         * Master switch for clock color
-         * @hide
-         */
-        public static final String STATUSBAR_CLOCK_COLOR_SWITCH = "statusbar_clock_color_switch";
-
-        /**
-         * Settings for clock font style
-         * @hide
-         */
-        public static final String STATUSBAR_CLOCK_FONT_STYLE = "statusbar_clock_font_style";
-
-        /**
-         * Settings for clock font size
-         * @hide
-         */
-        public static final String STATUSBAR_CLOCK_FONT_SIZE = "statusbar_clock_font_size";
 
         /** @hide */
         public static final Validator EGG_MODE_VALIDATOR = new Validator() {
@@ -3756,30 +3709,7 @@ public final class Settings {
 
         /**
          * Pie expanded desktop
-         * @hide/**
-         * Setting for clock color
          * @hide
-         */
-        public static final String STATUSBAR_CLOCK_COLOR = "statusbar_clock_color";
-
-        /**
-         * Master switch for clock color
-         * @hide
-         */
-        public static final String STATUSBAR_CLOCK_COLOR_SWITCH = "statusbar_clock_color_switch";
-
-        /**
-         * Settings for clock font style
-         * @hide
-         */
-        public static final String STATUSBAR_CLOCK_FONT_STYLE = "statusbar_clock_font_style";
-
-        /**
-         * Settings for clock font size
-         * @hide
-         */
-        public static final String STATUSBAR_CLOCK_FONT_SIZE = "statusbar_clock_font_size";
-
          */
         public static final String PA_PIE_EXPANDED_DESKTOP = "pa_pie_expanded_desktop";
 
