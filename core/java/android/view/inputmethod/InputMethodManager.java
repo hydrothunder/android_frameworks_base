@@ -1348,6 +1348,17 @@ public final class InputMethodManager {
             viewRootImpl.dispatchCheckFocus();
         }
     }
+	
+    /**
+     * @hide
+     */
+    public boolean isImeShowing() {
+        try {
+            return mService.isImeShowing();
+        } catch (RemoteException e) {
+            return false;
+        }
+    }
 
     /**
      * @hide
