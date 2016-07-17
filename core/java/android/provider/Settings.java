@@ -3834,7 +3834,8 @@ public final class Settings {
         @ChaosLab(name="GestureAnywhere", classification=Classification.NEW_FIELD)
         public static final String GESTURE_ANYWHERE_SHOW_TRIGGER = "gesture_anywhere_show_trigger";
 		
-         * Which applications to disable heads up notifications in
+        /**
+		* Which applications to disable heads up notifications in
          * @hide
          */
         public static final String HEADS_UP_CUSTOM_VALUES = "heads_up_custom_values";
