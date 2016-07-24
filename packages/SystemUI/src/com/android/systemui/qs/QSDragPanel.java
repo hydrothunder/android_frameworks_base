@@ -847,6 +847,12 @@ public class QSDragPanel extends QSPanel implements View.OnDragListener, View.On
         }
         return QSTileHost.TILES_PER_PAGE + 3 * addRows  + (2 + addRows) * moreSlots;
       }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        mTmpLoc = null;
+        mDisplaySize = null;
     }
 
     @Override
