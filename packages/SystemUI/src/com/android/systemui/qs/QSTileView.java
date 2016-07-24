@@ -60,11 +60,10 @@ public class QSTileView extends ViewGroup {
     private final View mIcon;
     private final View mDivider;
     private final H mHandler = new H();
-    private int mIconSizePx;
-    private float mSizeScale = 1.0f;
+    private final int mIconSizePx;
     private final int mTileSpacingPx;
     private int mTilePaddingTopPx;
-    private int mTilePaddingBelowIconPx;
+    private final int mTilePaddingBelowIconPx;
     private final int mDualTileVerticalPaddingPx;
     private final View mTopBackgroundView;
 
@@ -83,8 +82,9 @@ public class QSTileView extends ViewGroup {
 
         mContext = context;
         final Resources res = context.getResources();
-        updateDimens(res, 1.0f);
+        mIconSizePx = res.getDimensionPixelSize(R.dimen.qs_tile_icon_size);
         mTileSpacingPx = res.getDimensionPixelSize(R.dimen.qs_tile_spacing);
+        mTilePaddingBelowIconPx =  res.getDimensionPixelSize(R.dimen.qs_tile_padding_below_icon);
         mDualTileVerticalPaddingPx =
                 res.getDimensionPixelSize(R.dimen.qs_dual_tile_padding_vertical);
         mTileBackground = newTileBackground();
@@ -109,14 +109,6 @@ public class QSTileView extends ViewGroup {
         setId(View.generateViewId());
     }
 
-    void updateDimens(Resources res, float scaleFactor) {
-        mSizeScale = scaleFactor;
-        mIconSizePx = Math
-                .round(res.getDimensionPixelSize(R.dimen.qs_tile_icon_size) * scaleFactor);
-        mTilePaddingBelowIconPx = Math.round(res
-                .getDimensionPixelSize(R.dimen.qs_tile_padding_below_icon) * scaleFactor);
-    }
-
     private void updateTopPadding() {
         Resources res = getResources();
         int padding = res.getDimensionPixelSize(R.dimen.qs_tile_padding_top);
@@ -138,21 +130,17 @@ public class QSTileView extends ViewGroup {
         }
     }
 
-    void recreateLabel() {
+    private void recreateLabel() {
         CharSequence labelText = null;
         CharSequence labelDescription = null;
-        if (mLabel != null) {
+        if (mLabel != null && mLabel.isAttachedToWindow()) {
             labelText = mLabel.getText();
             removeView(mLabel);
-            mLabel = null;
         }
-        if (mDualLabel != null) {
+        if (mDualLabel != null && mDualLabel.isAttachedToWindow()) {
             labelText = mDualLabel.getText();
-            if (mLabel != null) {
-                labelDescription = mLabel.getContentDescription();
-            }
+            labelDescription = mDualLabel.getContentDescription();
             removeView(mDualLabel);
-            mDualLabel = null;
         }
         final Resources res = mContext.getResources();
         if (mDual) {
@@ -190,7 +178,7 @@ public class QSTileView extends ViewGroup {
                 mLabel.setPadding(0, 0, 0, 0);
                 mLabel.setTypeface(CONDENSED);
                 mLabel.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                        Math.round(res.getDimensionPixelSize(R.dimen.qs_tile_text_size) * mSizeScale));
+                        res.getDimensionPixelSize(R.dimen.qs_tile_text_size));
                 mLabel.setClickable(false);
                 mLabel.setFocusable(false);
             }
