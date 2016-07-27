@@ -50,6 +50,7 @@ import com.android.systemui.recents.model.RecentsPackageMonitor;
 import com.android.systemui.recents.model.RecentsTaskLoader;
 import com.android.systemui.recents.model.Task;
 import com.android.systemui.recents.model.TaskStack;
+import com.android.systemui.recents.views.RecentsView;
 import com.android.systemui.statusbar.DismissView;
 
 import java.util.ArrayList;
@@ -78,6 +79,8 @@ public class TaskStackView extends FrameLayout implements TaskStack.TaskStackCal
         public void onTaskResize(Task t);
     }
     RecentsConfiguration mConfig;
+
+    RecentsView mView;
 
     TaskStack mStack;
     TaskStackViewLayoutAlgorithm mLayoutAlgorithm;
@@ -358,6 +361,9 @@ public class TaskStackView extends FrameLayout implements TaskStack.TaskStackCal
                     @Override
                     public void onClick(View v) {
                         mStack.removeAllTasks();
+                        if (mView != null) {
+                            mView.updateMemoryStatus();
+                        }
                     }
                 });
                 addView(mDismissAllButton, 0);
@@ -623,6 +629,32 @@ public class TaskStackView extends FrameLayout implements TaskStack.TaskStackCal
         }
         mFocusedTaskIndex = -1;
         mPrevAccessibilityFocusedIndex = -1;
+    }
+
+    public void dismissAllTasks() {
+        post(new Runnable() {
+            @Override
+            public void run() {
+                ArrayList<Task> tasks = new ArrayList<Task>();
+                tasks.addAll(mStack.getTasks());
+                // Remove visible TaskViews
+                int childCount = getChildCount();
+                for (int i = 0; i < childCount; i++) {
+                    TaskView tv = (TaskView) getChildAt(i);
+                    tasks.remove(tv.getTask());
+                    tv.dismissTask();
+                }
+
+                int size = tasks.size();
+                // Remove any other Tasks
+                for (int i = 0; i < size; i++) {
+                    Task t = tasks.get(i);
+                    if (mStack.getTasks().contains(t)) {
+                        mStack.removeTask(t);
+                    }
+                }
+            }
+        });
     }
 
     @Override

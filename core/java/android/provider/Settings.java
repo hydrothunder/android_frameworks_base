@@ -3521,6 +3521,12 @@ public final class Settings {
          */
         public static final String EGG_MODE = "egg_mode";
 
+        /**
+         * show the membar in recents
+         *  @hide
+         */
+        public static final String SYSTEMUI_RECENTS_MEM_DISPLAY = "systemui_recents_mem_display";
+
         /** @hide */
         public static final Validator EGG_MODE_VALIDATOR = new Validator() {
             @Override
@@ -3904,6 +3910,19 @@ public final class Settings {
          * @hide
          */
         public static final String ANIM_TILE_DURATION = "anim_tile_duration";	
+
+	
+	/**
+         * show clear all recents button
+         *  @hide
+         */
+        public static final String SHOW_CLEAR_ALL_RECENTS = "show_clear_all_recents";
+
+        /**
+         * location of the clear all rectents button
+         * @hide
+         */
+        public static final String RECENTS_CLEAR_ALL_LOCATION = "recents_clear_all_location";
 
 	/**
          * Settings to backup. This is here so that it's in the same place as the settings
