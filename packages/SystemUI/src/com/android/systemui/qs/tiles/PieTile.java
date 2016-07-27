@@ -38,7 +38,7 @@ import com.android.systemui.qs.QSTileView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import org.cyanogenmod.internal.logging.CMMetricsLogger;
+import com.android.internal.logging.MetricsLogger;
 
 
 public class PieTile extends QSTile<QSTile.BooleanState> {
@@ -61,7 +61,7 @@ public class PieTile extends QSTile<QSTile.BooleanState> {
 
     @Override
     public int getMetricsCategory() {
-        return CMMetricsLogger.DONT_LOG;
+        return MetricsLogger.DONT_TRACK_ME_BRO;
     }
 
 
