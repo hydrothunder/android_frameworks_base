@@ -25,8 +25,8 @@ import android.provider.Settings;
 import com.android.systemui.R;
 import com.android.systemui.qs.QSTile;
 
-import com.android.internal.util.benzo.Helpers;
-import com.android.internal.logging.MetricsLogger;
+import com.android.internal.util.hydrothunder.Helpers;
+import org.cyanogenmod.internal.logging.CMMetricsLogger;
 
 /** Quick settings tile: Heads Up **/
 public class SystemUIRestartTile extends QSTile<QSTile.BooleanState> {
