@@ -30,7 +30,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import org.cyanogenmod.internal.logging.CMMetricsLogger
+import org.cyanogenmod.internal.logging.CMMetricsLogger;
 import com.android.systemui.R;
 import com.android.systemui.qs.QSTile;
 
