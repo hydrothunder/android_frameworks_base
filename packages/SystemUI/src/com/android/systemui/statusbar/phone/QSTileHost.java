@@ -55,13 +55,20 @@ import com.android.systemui.qs.tiles.HeadsUpTile;
 import com.android.systemui.qs.tiles.HotspotTile;
 import com.android.systemui.qs.tiles.IntentTile;
 import com.android.systemui.qs.tiles.LocationTile;
+import com.android.systemui.qs.tiles.GestureAnyWhereTile;
+import com.android.systemui.qs.tiles.SystemUIRestartTile;
 import com.android.systemui.qs.tiles.PieTile;
 import com.android.systemui.qs.tiles.LockscreenToggleTile;
+import com.android.systemui.qs.tiles.MusicTile;
+import com.android.systemui.qs.tiles.KillAppTile;
 import com.android.systemui.qs.tiles.NfcTile;
 import com.android.systemui.qs.tiles.PerfProfileTile;
 import com.android.systemui.qs.tiles.ProfilesTile;
+import com.android.systemui.qs.tiles.RebootTile;
 import com.android.systemui.qs.tiles.RotationLockTile;
+import com.android.systemui.qs.tiles.PowerMenuTile;
 import com.android.systemui.qs.tiles.ScreenTimeoutTile;
+import com.android.systemui.qs.tiles.SoundTile;
 import com.android.systemui.qs.tiles.SyncTile;
 import com.android.systemui.qs.tiles.UsbTetherTile;
 import com.android.systemui.qs.tiles.VolumeTile;
@@ -368,11 +375,18 @@ public class QSTileHost implements QSTile.Host, Tunable {
         else if (tileSpec.equals("screen_timeout")) return new ScreenTimeoutTile(this);
         else if (tileSpec.equals("performance")) return new PerfProfileTile(this);
         else if (tileSpec.equals("pie")) return new PieTile(this);
-        else if (tileSpec.equals("lockscreen")) return  new LockscreenToggleTile(this);
+        else if (tileSpec.equals("reboot")) return new RebootTile(this);
+	else if (tileSpec.equals("lockscreen")) return  new LockscreenToggleTile(this);
         else if (tileSpec.equals("ambient_display")) return new AmbientDisplayTile(this);
-        else if (tileSpec.equals("heads_up")) return new HeadsUpTile(this);
+	else if (tileSpec.equals("music")) return new MusicTile(this);        
+	else if (tileSpec.equals("restartui")) return new SystemUIRestartTile(this);
+	else if (tileSpec.equals("heads_up")) return new HeadsUpTile(this);
         else if (tileSpec.equals("battery_saver")) return new BatterySaverTile(this);
-        else if (tileSpec.equals("caffeine")) return new CaffeineTile(this);
+	else if (tileSpec.equals("kill_app")) return new KillAppTile(this);
+	else if (tileSpec.equals("gesture_anywhere")) return new GestureAnyWhereTile(this);
+	else if (tileSpec.equals("power_menu")) return new PowerMenuTile(this);        
+	else if (tileSpec.equals("sound")) return new SoundTile(this);	
+	else if (tileSpec.equals("caffeine")) return new CaffeineTile(this);
         else if (tileSpec.startsWith(IntentTile.PREFIX)) return IntentTile.create(this,tileSpec);
         else if (TextUtils.split(tileSpec, "\\|").length == 3) {
             /** restores placeholder for
@@ -470,8 +484,13 @@ public class QSTileHost implements QSTile.Host, Tunable {
         else if (spec.equals("heads_up")) return R.string.quick_settings_heads_up_label;
         else if (spec.equals("battery_saver")) return R.string.quick_settings_battery_saver_label;
         else if (spec.equals("caffeine")) return R.string.quick_settings_caffeine_label;
-		else if (spec.equals("pie")) return R.string.quick_settings_pie;
-        return 0;
+	else if (spec.equals("restartui")) return R.string.quick_settings_systemui_restart_label;
+	else if (spec.equals("pie")) return R.string.quick_settings_pie;
+	else if (spec.equals("sound")) return R.string.quick_settings_sound_label;
+	else if (spec.equals("power_menu")) return R.string.quick_settings_power_menu_label;        
+	else if (spec.equals("gesture_anywhere")) return R.string.quick_settings_gesture_anywhere_label;
+	else if (spec.equals("kill_app")) return R.string.qs_kill_app;
+	return 0;
     }
 
     public static int getIconResource(String spec) {
@@ -501,8 +520,13 @@ public class QSTileHost implements QSTile.Host, Tunable {
         else if (spec.equals("heads_up")) return R.drawable.ic_qs_heads_up_on;
         else if (spec.equals("battery_saver")) return R.drawable.ic_qs_battery_saver_on;
         else if (spec.equals("caffeine")) return R.drawable.ic_qs_caffeine_on;
-		else if (spec.equals("pie")) return R.drawable.ic_qs_pie_on;
-        return 0;
+	else if (spec.equals("restartui")) return R.drawable.ic_qs_systemui_restart;	
+	else if (spec.equals("pie")) return R.drawable.ic_qs_pie_on;
+        else if (spec.equals("power_menu")) return R.drawable.ic_qs_power_menu;
+	else if (spec.equals("sound")) return R.drawable.ic_qs_ringer_audible;
+	else if (spec.equals("kill_app")) return R.drawable.ic_app_kill;
+	else if (spec.equals("gesture_anywhere")) return R.drawable.ic_qs_gestures_on;
+	return 0;
     }
 
     void updateCustomTile(StatusBarPanelCustomTile sbc) {
