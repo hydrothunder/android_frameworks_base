@@ -26,7 +26,4 @@
     <!-- Button to soft reboot the device, within the Reboot Options dialog -->
     <string name="reboot_systemui">Restart SystemUI</string>
 
-	<!-- Long-press back kill application -->
- 	<string name="app_killed_message">App killed</string>
-
 </resources>
