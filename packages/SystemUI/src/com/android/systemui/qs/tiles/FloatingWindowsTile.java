@@ -42,7 +42,7 @@ import java.util.UUID;
 public class FloatingWindowsTile extends QSTile<QSTile.BooleanState> {
     private boolean mListening;
     private FloatingWindowsObserver mObserver;
-    private static final Intent TEMASEK_FLOATING_WINDOW = new Intent().setComponent(new ComponentName(
+    private static final Intent HYDROTHUNDER_FLOATING_WINDOW = new Intent().setComponent(new ComponentName(
             "com.android.settings", "com.android.settings.Settings$FloatingWindowActivity"));
 
     public FloatingWindowsTile(Host host) {
@@ -63,7 +63,7 @@ public class FloatingWindowsTile extends QSTile<QSTile.BooleanState> {
 
     @Override
     public void handleLongClick() {
-    mHost.startActivityDismissingKeyguard(TEMASEK_FLOATING_WINDOW);
+    mHost.startActivityDismissingKeyguard(HYDROTHUNDER_FLOATING_WINDOW);
     }
 
     protected void toggleState() {
